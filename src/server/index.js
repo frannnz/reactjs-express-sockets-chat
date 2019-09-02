@@ -8,46 +8,39 @@ const port = process.env.PORT || 8080;
 app.use(express.static(path.join(__dirname, '../../build')));
 
 app.get('/', (req, res, next) =>
-res.sendFile(__dirname + './index.html'));
+  res.sendFile(__dirname + './index.html'));
 
-io.on('connection', socket => 
-{
-    console.log("USER LOG");
-socket.emit ('hello', {message: 'hello from server'})
+io.on('connection', socket => {
+
+  socket.emit('hello', { message: 'hello from server' })
 
 }
 );
 
 
-
-
 var clients = [];
-
 
 
 io.sockets.on('connection', function (socket) {
 
-
-
   var clientInfo = new Object();
 
   socket.on('storeClientInfo', function (data) {
-
     clientInfo.customId = data.customId;
     clientInfo.name = data.name;
     clientInfo.clientId = socket.id;
-
     if (clientInfo.name !== undefined) {
-      clients.push(clientInfo);
-
-    }
-
+    clients.push(clientInfo);
     console.log('>> New client connected')
     console.log("-----------");
     console.log(clients.length + " connected");
     console.log(clients);
     console.log("-----------");
+    }
+
+
     io.emit('server message', clients);
+  
   });
 
 
@@ -61,17 +54,21 @@ io.sockets.on('connection', function (socket) {
         console.log(clients.length + " connected");
         console.log(clients);
         console.log("-----------");
-
         io.emit('server message', clients);
         break;
       }
     }
-
   });
 });
 
+console.log(`
+
+---------------------------------
+  SERVER STARTED!
+  on port ${port}
+---------------------------------
 
 
-
+`);
 
 server.listen(port);

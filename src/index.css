@@ -11,3 +11,38 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.login {
+  color: white;
+  font-size: 50px;
+  margin: 10px;
+  padding: 50px;
+  text-align: center;
+  background-color: rgb(122, 122, 122);
+}
+
+.login input {
+  font-size: 30px;
+  margin: 0px;
+  padding: 10px;
+}
+.login button {
+  font-size: 30px;
+  margin: 0px;
+  margin:10px;
+  padding: 10px;
+}
+
+.online {
+  color: white;
+  margin: 10px;
+  padding: 10px;
+  text-align: center;
+  background-color: rgb(56, 56, 56);
+}
+
+.online ul li {
+  font-size: 50px;
+
+  list-style: none;
+}
