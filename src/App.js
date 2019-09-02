@@ -79,6 +79,15 @@ export default class App extends Component {
 
     handleSubmit = event => {
         event.preventDefault();
+
+
+        if (this.state.usernameInput !== "")
+        {
+
+           
+        
+
+
         this.setState({
             username: this.state.usernameInput,
         })
@@ -104,7 +113,7 @@ export default class App extends Component {
             this.setState({ chatMessages: data });
         });
 
-
+}
 
     }
 
@@ -179,7 +188,7 @@ export default class App extends Component {
                     <ul>
                         {this.state.chatMessages.slice(-10).reverse().map((item, index) => (
                             <li key={index}> 
-                                <span className="userName">{item.user}:</span> {item.text}
+                                 <img src='https://www.123gif.de/gifs/smileys/smileys-0027.gif'></img><span className="userName">{item.user}:</span> {item.text}
                             </li>
                         ))}
                     </ul>
