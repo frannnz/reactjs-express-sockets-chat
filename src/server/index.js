@@ -40,8 +40,6 @@ io.sockets.on('connection', function (socket) {
 
   var clientInfo = new Object();
   socket.on('storeClientInfo', function (data) {
-    console.log("ok");
-
     clientInfo.customId = data.customId;
     clientInfo.name = data.name;
     clientInfo.clientId = socket.id;
@@ -61,12 +59,12 @@ io.sockets.on('connection', function (socket) {
 
   var cMessages = new Object();
   socket.on('storeChat', function (data) {
-    console.log(`Text: ${data.text}`);
-        cMessages.text = data.text
+/*     console.log(`Text: ${data.text}`);
+ */        cMessages.text = data.text
         cMessages.user = data.user
         messAges.push(cMessages);
-        console.log(messAges);
-    io.emit('chatMessage',messAges);
+/*         console.log(messAges);
+ */    io.emit('chatMessage',messAges);
   }
   );
 

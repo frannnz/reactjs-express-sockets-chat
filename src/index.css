@@ -1,4 +1,5 @@
 body {
+  background-color: rgb(20, 20, 20);
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
@@ -57,6 +58,21 @@ code {
   background-color: rgb(56, 56, 56);
 }
 
+
+.Chat input {
+  font-size: 20px;
+  margin: 0px;
+  padding: 10px;
+}
+.Chat button {
+  font-size: 20px;
+  margin: 0px;
+  margin: 10px;
+  padding: 10px;
+}
+
+
+
 .Chat ul {
   padding: 0;
   margin: 0;
@@ -68,5 +84,10 @@ code {
 }
 
 .Chat ul li:nth-child(even) {
-  background-color: rgb(93, 93, 93);
+  background-color: rgb(68, 68, 68);
+}
+
+.userName {
+color: rgb(180, 180, 180);
+  font-weight: bold;
 }

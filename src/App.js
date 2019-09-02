@@ -164,10 +164,11 @@ export default class App extends Component {
             return (
 
                 <div className="Chat">
+
                     <form onSubmit={this.chatSubmit}>
                         <input
                             type="text"
-                            placeholder="text"
+                            placeholder=""
                             onChange={this.handleChat}
                             value={this.state.textChat}
                             autoFocus
@@ -175,14 +176,18 @@ export default class App extends Component {
                         <button type="submit">
                             chat</button>
                     </form>
-
                     <ul>
-                        {this.state.chatMessages.slice(0).reverse().map(item => (
-                            <li>
-                                {item.user}: {item.text}
+                        {this.state.chatMessages.slice(-10).reverse().map((item, index) => (
+                            <li key={index}> 
+                                <span className="userName">{item.user}:</span> {item.text}
                             </li>
                         ))}
                     </ul>
+
+
+
+
+
                 </div>
             );
 
