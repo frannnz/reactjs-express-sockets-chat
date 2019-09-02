@@ -8,7 +8,6 @@ const bodyParser = require('body-parser');
 
 const port = process.env.PORT || 8080;
 
-
 app.use(express.static(path.join(__dirname, '../../build')));
 
 app.use(
@@ -28,12 +27,6 @@ app.use((req, res, next) => {
 });
 
 
-
-
-
-
-
-
 io.on('connection', socket => {
   socket.emit('hello', { message: 'hello from server' })
 }
@@ -41,11 +34,14 @@ io.on('connection', socket => {
 
 
 var clients = [];
+var messAges = [];
 
 io.sockets.on('connection', function (socket) {
 
   var clientInfo = new Object();
   socket.on('storeClientInfo', function (data) {
+    console.log("ok");
+
     clientInfo.customId = data.customId;
     clientInfo.name = data.name;
     clientInfo.clientId = socket.id;
@@ -61,16 +57,24 @@ io.sockets.on('connection', function (socket) {
 
 
     ////
-
-    socket.on('storeChat', function (data) {
-      console.log(data.name);
-
-      console.log('>> Chat')
-
-    }
-    );
-
   });
+
+  var cMessages = new Object();
+
+  socket.on('storeChat', function (data) {
+    console.log(`Text: ${data.text}`);
+/* 
+    cMessages.text = data.text
+    messAges.push(cMessages); */
+
+
+    io.emit('chatMessage', data.text);
+
+
+  }
+  );
+
+
 
 
   socket.on('disconnect', function (data) {

@@ -7,12 +7,13 @@ let ownId = "User++" + Math.random();
 export default class App extends Component {
 
     state = {
-        /* endpoint: "http://localhost:8080", */
-        endpoint: "",
+        endpoint: "http://localhost:8080",
+        /*      endpoint: "", */
 
         usernameInput: "",
         username: "",
         onlineObj: [],
+        chatMessages: [],
         textChat: "",
 
         response: '',
@@ -111,18 +112,19 @@ export default class App extends Component {
         console.log("send");
 
         const socket = io(this.state.endpoint);
-
-
-        socket.emit("storeChat", {
-            name: "test"
-
+        socket.on("connect", data => {
+            socket.emit("storeChat", {
+                text: this.state.textChat
+            });
+            this.setState({ textChat: "" });
 
 
         });
+        socket.on("chatMessage", data => {
+            this.setState({ chatMessages: data });
+        });
 
 
-
-        this.setState({ textChat: "" });
 
     }
 
@@ -150,11 +152,9 @@ export default class App extends Component {
     render() {
         return (
             <div>
-
                 <div className="login">
                     {this.formRender()}
                 </div>
-
                 <div className="online">
                     <h4>Users Online</h4>
                     <ul>
@@ -167,8 +167,6 @@ export default class App extends Component {
                 </div>
 
                 <div>
-
-
                     <p>{this.state.response}</p>
                     <form onSubmit={this.handleFormSubmit}>
                         <p>
@@ -179,7 +177,6 @@ export default class App extends Component {
                             value={this.state.post2}
                             onChange={e => this.setState({ post2: e.target.value })}
                         />
-
                         <input
                             type="text"
                             value={this.state.post}
@@ -190,10 +187,23 @@ export default class App extends Component {
                     <p>{this.state.responseToPost}</p>
                 </div>
 
-
-
+                <div>
+                    <form onSubmit={this.chatSubmit}>
+                        <input
+                            type="text"
+                            placeholder="text"
+                            onChange={this.handleChat}
+                            value={this.state.textChat}
+                            autoFocus
+                        />
+                        <button type="submit">
+                            chat</button>
+                    </form>
+                </div>
+                <div>
+                    Chat <hr></hr>{this.state.chatMessages}
+                </div>
             </div>
-
 
         )
     }

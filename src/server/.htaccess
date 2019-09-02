@@ -1,3 +1,0 @@
-Header set Access-Control-Allow-Origin "*"
-
-apachectl -t
