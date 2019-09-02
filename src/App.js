@@ -7,8 +7,8 @@ let ownId = "User++" + Math.random();
 export default class App extends Component {
 
     state = {
-/*         endpoint: "http://localhost:8080",
- */             endpoint: "",
+        /* endpoint: "http://localhost:8080", */
+        endpoint: "",
 
         usernameInput: "",
         username: "",
@@ -35,10 +35,14 @@ export default class App extends Component {
         socket.on("connect", data => {
             socket.emit("storeClientInfo", {
             });
+
         });
         socket.on("server message", data => {
             this.setState({ onlineObj: data });
         });
+
+
+
     }
 
 
@@ -77,8 +81,7 @@ export default class App extends Component {
         event.preventDefault();
         this.setState({
             username: this.state.usernameInput,
-/*       usernameInput: ""
- */    })
+        })
         ///////////////
         const socket = io(this.state.endpoint);
         socket.on("connect", data => {
@@ -86,10 +89,22 @@ export default class App extends Component {
                 name: this.state.username,
                 customId: ownId
             });
+            socket.emit("storeChat", {
+                text: `${this.state.username} joined!`,
+                user: "Admin",
+            });
         });
         socket.on("server message", data => {
             this.setState({ onlineObj: data });
         });
+
+        socket.on("chatMessage", data => {
+            console.log(data);
+
+            this.setState({ chatMessages: data });
+        });
+
+
 
     }
 
@@ -104,28 +119,20 @@ export default class App extends Component {
         const chatInput = event.target.value;
         this.setState({ textChat: chatInput });
     };
-
-
     chatSubmit = event => {
         event.preventDefault();
-
-        console.log("send");
 
         const socket = io(this.state.endpoint);
         socket.on("connect", data => {
             socket.emit("storeChat", {
-                text: this.state.textChat
+                text: this.state.textChat,
+                user: this.state.username,
             });
             this.setState({ textChat: "" });
-
-
         });
         socket.on("chatMessage", data => {
             this.setState({ chatMessages: data });
         });
-
-
-
     }
 
 
@@ -149,6 +156,40 @@ export default class App extends Component {
     };
 
 
+
+
+    loadChat = () => {
+
+        if (this.state.username !== "") {
+            return (
+
+                <div className="Chat">
+                    <form onSubmit={this.chatSubmit}>
+                        <input
+                            type="text"
+                            placeholder="text"
+                            onChange={this.handleChat}
+                            value={this.state.textChat}
+                            autoFocus
+                        />
+                        <button type="submit">
+                            chat</button>
+                    </form>
+
+                    <ul>
+                        {this.state.chatMessages.slice(0).reverse().map(item => (
+                            <li>
+                                {item.user}: {item.text}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            );
+
+        }
+
+    }
+
     render() {
         return (
             <div>
@@ -156,7 +197,7 @@ export default class App extends Component {
                     {this.formRender()}
                 </div>
                 <div className="online">
-                    <h4>Users Online</h4>
+                    {this.state.onlineObj.length} Online
                     <ul>
                         {this.state.onlineObj.slice(0).reverse().map(item => (
                             <li key={item.clientId}>
@@ -166,7 +207,23 @@ export default class App extends Component {
                     </ul>
                 </div>
 
+
+
                 <div>
+
+                    {this.loadChat()}
+
+                </div>
+
+
+
+
+
+
+
+
+
+                {/*                 <div>
                     <p>{this.state.response}</p>
                     <form onSubmit={this.handleFormSubmit}>
                         <p>
@@ -185,24 +242,7 @@ export default class App extends Component {
                         <button type="submit">Submit</button>
                     </form>
                     <p>{this.state.responseToPost}</p>
-                </div>
-
-                <div>
-                    <form onSubmit={this.chatSubmit}>
-                        <input
-                            type="text"
-                            placeholder="text"
-                            onChange={this.handleChat}
-                            value={this.state.textChat}
-                            autoFocus
-                        />
-                        <button type="submit">
-                            chat</button>
-                    </form>
-                </div>
-                <div>
-                    Chat <hr></hr>{this.state.chatMessages}
-                </div>
+                </div> */}
             </div>
 
         )

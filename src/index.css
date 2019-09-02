@@ -14,22 +14,22 @@ code {
 
 .login {
   color: white;
-  font-size: 50px;
+  font-size: 30px;
   margin: 10px;
-  padding: 50px;
+  padding: 10px;
   text-align: center;
   background-color: rgb(122, 122, 122);
 }
 
 .login input {
-  font-size: 30px;
+  font-size: 20px;
   margin: 0px;
   padding: 10px;
 }
 .login button {
-  font-size: 30px;
+  font-size: 20px;
   margin: 0px;
-  margin:10px;
+  margin: 10px;
   padding: 10px;
 }
 
@@ -41,8 +41,32 @@ code {
   background-color: rgb(56, 56, 56);
 }
 
+.online ul {
+  padding: 0;
+  margin: 0;
+}
 .online ul li {
-  font-size: 50px;
-
+  font-size: 20px;
   list-style: none;
+}
+
+.Chat {
+  color: white;
+  margin: 10px;
+  padding: 10px;
+  background-color: rgb(56, 56, 56);
+}
+
+.Chat ul {
+  padding: 0;
+  margin: 0;
+}
+.Chat ul li {
+  padding: 10px;
+  margin: 0;
+  list-style: none;
+}
+
+.Chat ul li:nth-child(even) {
+  background-color: rgb(93, 93, 93);
 }

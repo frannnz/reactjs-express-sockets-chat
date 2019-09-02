@@ -60,17 +60,13 @@ io.sockets.on('connection', function (socket) {
   });
 
   var cMessages = new Object();
-
   socket.on('storeChat', function (data) {
     console.log(`Text: ${data.text}`);
-/* 
-    cMessages.text = data.text
-    messAges.push(cMessages); */
-
-
-    io.emit('chatMessage', data.text);
-
-
+        cMessages.text = data.text
+        cMessages.user = data.user
+        messAges.push(cMessages);
+        console.log(messAges);
+    io.emit('chatMessage',messAges);
   }
   );
 
@@ -88,6 +84,9 @@ io.sockets.on('connection', function (socket) {
         console.log(clients);
         console.log("-----------");
         io.emit('server message', clients);
+
+
+
         break;
       }
     }
