@@ -7,8 +7,8 @@ let ownId = "User++" + Math.random();
 export default class App extends Component {
 
     state = {
-/*         endpoint: "http://localhost:8080",
- */          endpoint: "",
+        /* endpoint: "http://localhost:8080", */
+        endpoint: "",
 
         usernameInput: "",
         username: "",
@@ -42,7 +42,7 @@ export default class App extends Component {
 
 
     callApi = async () => {
-        const response = await fetch('http://localhost:8080/api/hello');
+        const response = await fetch(`${this.state.endpoint}/api/hello`);
         const body = await response.json();
         if (response.status !== 200) throw Error(body.message);
         return body;
@@ -131,7 +131,7 @@ export default class App extends Component {
 
 
         e.preventDefault();
-        const response = await fetch('http://localhost:8080/api/world', {
+        const response = await fetch(`${this.state.endpoint}/api/world`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
