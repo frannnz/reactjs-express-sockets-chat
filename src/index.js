@@ -2,18 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import io from 'socket.io-client';
 import * as serviceWorker from './serviceWorker';
 
 
-const socket = io();
 
-socket.on('hello', ({message}) => 
-{
-alert (message)
-}
-
-);
 
 
 ReactDOM.render(<App />, document.getElementById('root'));

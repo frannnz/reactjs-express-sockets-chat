@@ -1,19 +1,45 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react'
+import io from 'socket.io-client';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
+/*   const socket = io("http://localhost:8080/");
+ */  const socket = io();
 
-      </header>
-    </div>
+
+export default class App extends Component {
+
+componentDidMount()
+{
+
+
+
+
+  socket.on('hello', ({message}) => 
+  {
+  alert (message)
+  }
+  
   );
-}
+  
+  
+  socket.on("connect", data => {
+      socket.emit("storeClientInfo", {
+        name: "test",
+        customId: "ownId"
+      });
+    });
+    socket.on("server message", data => {
+      this.setState({ onlineObj: data });
+    });
+  
+    
 
-export default App;
+
+}
+  render() {
+    return (
+      <div>
+        Hello
+      </div>
+    )
+  }
+}
