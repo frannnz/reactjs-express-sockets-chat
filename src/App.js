@@ -7,8 +7,8 @@ let ownId = "User++" + Math.random();
 export default class App extends Component {
 
     state = {
-        endpoint: "http://localhost:8080",
-        /*      endpoint: "", */
+/*         endpoint: "http://localhost:8080",
+ */             endpoint: "",
 
         usernameInput: "",
         username: "",
