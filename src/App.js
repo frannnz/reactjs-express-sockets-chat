@@ -12,7 +12,7 @@ let LocalHost = "offline"; // "online" or "offline"
 // use "offline" for local work
 // use "online" to deploy 
 let setHost = "";
-if (LocalHost === "offline") {
+if (LocalHost === "online") {
     setHost = "http://localhost:8080";
 }
 
