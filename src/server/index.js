@@ -8,24 +8,26 @@ const bodyParser = require('body-parser');
 
 const port = process.env.PORT || 8080;
 
-app.use(express.static(path.join(__dirname, '../../build')));
+console.clear();
 
+app.use(express.static(path.join(__dirname, '../../build')));
 app.use(
   cors({
     origin: 'http://localhost:3000',
     credentials: true,
   })
 );
-
-app.get('/', (req, res, next) =>
-  res.sendFile(__dirname + './index.html'));
-
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
+
+app.get('/', (req, res, next) =>
+  res.sendFile(__dirname + './index.html'));
 
 io.on('connection', socket => {
   socket.emit('hello', { message: 'hello from server' })
@@ -52,19 +54,16 @@ io.sockets.on('connection', function (socket) {
       console.log("-----------");
     }
     io.emit('server message', clients);
-
-
-    ////
   });
 
   var cMessages = new Object();
   socket.on('storeChat', function (data) {
 /*     console.log(`Text: ${data.text}`);
  */        cMessages.text = data.text
-        cMessages.user = data.user
-        messAges.push(cMessages);
+    cMessages.user = data.user
+    messAges.push(cMessages);
 /*         console.log(messAges);
- */    io.emit('chatMessage',messAges);
+ */    io.emit('chatMessage', messAges);
   }
   );
 
@@ -82,34 +81,11 @@ io.sockets.on('connection', function (socket) {
         console.log(clients);
         console.log("-----------");
         io.emit('server message', clients);
-
-
-
         break;
       }
     }
   });
 });
-
-
-console.clear();
-
-
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
-app.get('/api/hello', (req, res) => {
-  res.send({ express: 'Hello From Express' });
-});
-
-app.post('/api/world', (req, res) => {
-  console.log(req.body);
-  res.send(
-    `I received your POST request. This is what you sent me: ${req.body.post} ${req.body.post2}`,
-  );
-});
-
 
 
 

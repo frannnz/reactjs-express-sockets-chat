@@ -1,36 +1,32 @@
 import React, { Component } from 'react'
 import io from 'socket.io-client';
+import Demo from './components/geo'
 
 
 let ownId = "User++" + Math.random();
 
+
+let LocalHost = "online";
+let setHost = "";
+if (LocalHost === "offline") {
+    setHost = "http://localhost:8080";
+}
+
 export default class App extends Component {
 
     state = {
-        /* endpoint: "http://localhost:8080", */
-        endpoint: "",
+        endpoint: setHost,
+        /*  endpoint: "", */
 
         usernameInput: "",
         username: "",
         onlineObj: [],
         chatMessages: [],
         textChat: "",
-
-        response: '',
-        post: '',
-        post2: '',
-        responseToPost: '',
-
     }
 
 
-
     componentDidMount() {
-        ////////////////////////////////////
-        this.callApi()
-            .then(res => this.setState({ response: res.express }))
-            .catch(err => console.log(err));
-        ///////////////////////////////////   
         const socket = io(this.state.endpoint);
         socket.on("connect", data => {
             socket.emit("storeClientInfo", {
@@ -40,28 +36,17 @@ export default class App extends Component {
         socket.on("server message", data => {
             this.setState({ onlineObj: data });
         });
-
-
-
     }
 
 
-    callApi = async () => {
-        const response = await fetch(`${this.state.endpoint}/api/hello`);
-        const body = await response.json();
-        if (response.status !== 200) throw Error(body.message);
-        return body;
-    };
-
     formRender = () => {
-
         if (this.state.username === "") {
             return (
-                <form onSubmit={this.handleSubmit}>
+                <form onSubmit={this.handleLoginSubmit}>
                     <input
                         type="text"
                         placeholder="Your Name"
-                        onChange={this.handleInputChange}
+                        onChange={this.handleLoginChange}
                         value={this.state.usernameInput}
                         autoFocus
                     />
@@ -77,60 +62,47 @@ export default class App extends Component {
     }
 
 
-    handleSubmit = event => {
+    handleLoginSubmit = event => {
         event.preventDefault();
-
-
-        if (this.state.usernameInput !== "")
-        {
-
-           
-        
-
-
-        this.setState({
-            username: this.state.usernameInput,
-        })
-        ///////////////
-        const socket = io(this.state.endpoint);
-        socket.on("connect", data => {
-            socket.emit("storeClientInfo", {
-                name: this.state.username,
-                customId: ownId
+        if (this.state.usernameInput !== "") {
+            this.setState({
+                username: this.state.usernameInput,
+            })
+            ///////////////
+            const socket = io(this.state.endpoint);
+            socket.on("connect", data => {
+                socket.emit("storeClientInfo", {
+                    name: this.state.username,
+                    customId: ownId
+                });
+                socket.emit("storeChat", {
+                    text: `${this.state.username} joined!`,
+                    user: "Admin",
+                });
             });
-            socket.emit("storeChat", {
-                text: `${this.state.username} joined!`,
-                user: "Admin",
+            socket.on("server message", data => {
+                this.setState({ onlineObj: data });
             });
-        });
-        socket.on("server message", data => {
-            this.setState({ onlineObj: data });
-        });
+            socket.on("chatMessage", data => {
+                console.log(data);
 
-        socket.on("chatMessage", data => {
-            console.log(data);
-
-            this.setState({ chatMessages: data });
-        });
-
-}
-
+                this.setState({ chatMessages: data });
+            });
+        }
     }
 
-    handleInputChange = event => {
+    handleLoginChange = event => {
         const usernameInput = event.target.value;
         this.setState({ usernameInput: usernameInput });
     };
 
-
-
-    handleChat = event => {
+    handleChatChange = event => {
         const chatInput = event.target.value;
         this.setState({ textChat: chatInput });
     };
-    chatSubmit = event => {
-        event.preventDefault();
 
+    handleChatSubmit = event => {
+        event.preventDefault();
         const socket = io(this.state.endpoint);
         socket.on("connect", data => {
             socket.emit("storeChat", {
@@ -144,41 +116,15 @@ export default class App extends Component {
         });
     }
 
-
-    handleFormSubmit = async e => {
-
-
-        e.preventDefault();
-        const response = await fetch(`${this.state.endpoint}/api/world`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                post: this.state.post,
-                post2: this.state.post2
-            }),
-        });
-        const body = await response.text();
-
-        this.setState({ responseToPost: body });
-    };
-
-
-
-
     loadChat = () => {
-
         if (this.state.username !== "") {
             return (
-
                 <div className="Chat">
-
-                    <form onSubmit={this.chatSubmit}>
+                    <form onSubmit={this.handleChatSubmit}>
                         <input
                             type="text"
                             placeholder=""
-                            onChange={this.handleChat}
+                            onChange={this.handleChatChange}
                             value={this.state.textChat}
                             autoFocus
                         />
@@ -187,26 +133,21 @@ export default class App extends Component {
                     </form>
                     <ul>
                         {this.state.chatMessages.slice(-10).reverse().map((item, index) => (
-                            <li key={index}> 
-                                 <img src='https://www.123gif.de/gifs/smileys/smileys-0027.gif'></img><span className="userName">{item.user}:</span> {item.text}
+                            <li key={index}>
+                                <img alt="neu" src='https://www.123gif.de/gifs/smileys/smileys-0027.gif'></img><span className="userName">{item.user}:</span> {item.text}
                             </li>
                         ))}
                     </ul>
-
-
-
-
-
                 </div>
             );
-
         }
-
     }
 
     render() {
         return (
             <div>
+
+
                 <div className="login">
                     {this.formRender()}
                 </div>
@@ -220,45 +161,11 @@ export default class App extends Component {
                         ))}
                     </ul>
                 </div>
-
-
-
                 <div>
-
                     {this.loadChat()}
-
                 </div>
-
-
-
-
-
-
-
-
-
-                {/*                 <div>
-                    <p>{this.state.response}</p>
-                    <form onSubmit={this.handleFormSubmit}>
-                        <p>
-                            <strong>Post to Server:</strong>
-                        </p>
-                        <input
-                            type="text"
-                            value={this.state.post2}
-                            onChange={e => this.setState({ post2: e.target.value })}
-                        />
-                        <input
-                            type="text"
-                            value={this.state.post}
-                            onChange={e => this.setState({ post: e.target.value })}
-                        />
-                        <button type="submit">Submit</button>
-                    </form>
-                    <p>{this.state.responseToPost}</p>
-                </div> */}
+                <Demo />
             </div>
-
         )
     }
 }
