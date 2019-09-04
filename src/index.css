@@ -16,7 +16,6 @@ html {
   height: 100%;
 }
 
-
 .login {
   color: white;
   font-size: 30px;
@@ -39,30 +38,40 @@ html {
 }
 
 .collapse {
-  display: none
+  display: none;
 }
 
 .collapse.in {
-  display: block
+  display: block;
 }
 
 .onlineNames {
-  background-color: rgb(230, 230, 230, 0.5);
+  left: 50%;
+  margin-left: -110px;
+  position: absolute;
+  min-width: 200px;
+  background-color: rgba(41, 41, 41, 0.5);
   color: rgb(255, 255, 255);
-  border-radius: 20px;
-  padding:10px;
-  margin: 10px;
+  padding: 0px;
+  border-radius: 10px;
+
 }
 
+.oUser {
+  padding: 3px;
+  border-radius: 10px;
+  margin: 10px;
+  background-color: rgba(226, 226, 226, 0.5);
+}
 .online {
   top: 0;
-
+  font-weight: bold;
+  font-size: 20px;
   position: fixed;
   width: 100%;
-
   z-index: 1;
   color: white;
-  padding: 0px;
+  padding: 20px;
   text-align: center;
   background-color: rgb(56, 56, 56, 0.5);
 }
@@ -106,6 +115,7 @@ html {
   position: fixed;
   height: 100%;
   width: 100%;
+
   bottom: 50px;
   color: white;
   background-color: rgb(17, 17, 17);
