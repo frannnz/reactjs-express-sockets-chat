@@ -10,17 +10,17 @@ html {
 
   color: white;
   overflow: hidden;
-
 }
 
 .scrolling {
   height: 100%;
 }
 
+
 .login {
   color: white;
   font-size: 30px;
-  margin: 10px;
+  margin-top: 100px;
   padding: 10px;
   text-align: center;
   background-color: rgb(122, 122, 122);
@@ -38,14 +38,33 @@ html {
   padding: 10px;
 }
 
+.collapse {
+  display: none
+}
+
+.collapse.in {
+  display: block
+}
+
+.onlineNames {
+  background-color: rgb(230, 230, 230, 0.5);
+  color: rgb(255, 255, 255);
+  border-radius: 20px;
+  padding:10px;
+  margin: 10px;
+}
+
 .online {
+  top: 0;
+
   position: fixed;
+  width: 100%;
+
   z-index: 1;
   color: white;
-  margin: 10px;
-  padding: 10px;
+  padding: 0px;
   text-align: center;
-  background-color: rgb(56, 56, 56);
+  background-color: rgb(56, 56, 56, 0.5);
 }
 
 .online ul {
@@ -102,8 +121,6 @@ html {
   padding: 0;
   list-style: none;
 }
-
-
 
 .userNameRight {
   width: 100%;

@@ -25,6 +25,8 @@ export default class App extends Component {
         onlineObj: [],
         chatMessages: [],
         textChat: "",
+
+        open: false,
     }
 
 
@@ -86,7 +88,6 @@ export default class App extends Component {
             });
             socket.on("chatMessage", data => {
                 console.log(data);
-
                 this.setState({ chatMessages: data });
             });
         }
@@ -130,13 +131,13 @@ export default class App extends Component {
                                         {item.user !== this.state.username ?
                                             (
                                                 <div className="userNameLeft">
-                                                     <div className="userLeft">{item.user}<br></br>
-                                                    {item.text}</div>
+                                                    <div className="userLeft">{item.user}<br></br>
+                                                        {item.text}</div>
                                                 </div>
                                             ) : (
                                                 <div className="userNameRight">
                                                     <div className="userRight">
-                                                    {item.text}</div>
+                                                        {item.text}</div>
                                                 </div>
                                             )
                                         }
@@ -155,10 +156,10 @@ export default class App extends Component {
                                 placeholder="Message"
                                 onChange={this.handleChatChange}
                                 value={this.state.textChat}
-                                autoFocus
+                            /* autoFocus */
                             />
                             <button type="submit">
-                                chat</button>
+                            &#10148;	</button>
                         </div>
                     </form>
 
@@ -170,6 +171,13 @@ export default class App extends Component {
 
 
 
+    toggle() {
+        this.setState({
+            open: !this.state.open
+        });
+    }
+
+
     render() {
         return (
             <div>
@@ -178,15 +186,28 @@ export default class App extends Component {
                 <div className="login">
                     {this.formRender()}
                 </div>
+
+
+
+
+
+
                 <div className="online">
-                    {this.state.onlineObj.length} Online
-                    <ul>
-                        {this.state.onlineObj.slice(0).reverse().map(item => (
-                            <li key={item.clientId}>
-                                {item.name}
-                            </li>
-                        ))}
-                    </ul>
+                    <button onClick={this.toggle.bind(this)}>
+                        {this.state.onlineObj.length} User online ☰       </button>
+                    <div className={"collapse" + (this.state.open ? ' in' : '')}>
+                        <div className="onlineNames">
+                            <ul>
+                                {this.state.onlineObj.slice(0).reverse().map(item => (
+                                    <li key={item.clientId}>
+                                        {item.name}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    </div>
+
+
                 </div>
                 <div>
                     {this.loadChat()}
