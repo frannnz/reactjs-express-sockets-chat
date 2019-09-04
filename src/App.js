@@ -8,7 +8,7 @@ import ScrollToBottom from 'react-scroll-to-bottom';
 let ownId = "User++" + Math.random();
 
 
-let LocalHost = "online"; // "online" or "offline"
+let LocalHost = "offline"; // "online" or "offline"
 // use "offline" for local work
 // use "online" to deploy 
 let setHost = "";
@@ -126,7 +126,21 @@ export default class App extends Component {
                             <ul>
                                 {this.state.chatMessages.slice(-50).map((item, index) => (
                                     <li key={index}>
-                                        <img alt="neu" src='https://www.123gif.de/gifs/smileys/smileys-0027.gif'></img><span className="userName">{item.user}:</span> {item.text}
+
+                                        {item.user !== this.state.username ?
+                                            (
+                                                <div className="userNameLeft">
+                                                     <div className="userLeft">{item.user}<br></br>
+                                                    {item.text}</div>
+                                                </div>
+                                            ) : (
+                                                <div className="userNameRight">
+                                                    <div className="userRight">
+                                                    {item.text}</div>
+                                                </div>
+                                            )
+                                        }
+
                                     </li>
                                 ))}
                             </ul>
@@ -134,19 +148,19 @@ export default class App extends Component {
                     </div>
 
 
-                    <div className="ChatInput">
-                        <form onSubmit={this.handleChatSubmit}>
+                    <form onSubmit={this.handleChatSubmit}>
+                        <div className="ChatInput">
                             <input
                                 type="text"
-                                placeholder=""
+                                placeholder="Message"
                                 onChange={this.handleChatChange}
                                 value={this.state.textChat}
                                 autoFocus
                             />
                             <button type="submit">
                                 chat</button>
-                        </form>
-                    </div>
+                        </div>
+                    </form>
 
 
                 </div>

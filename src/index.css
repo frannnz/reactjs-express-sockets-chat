@@ -10,13 +10,10 @@ html {
 
   color: white;
   overflow: hidden;
-  /*   height: 100%;
-  width: 100%; */
+
 }
 
 .scrolling {
-  /*   position: fixed;
- */
   height: 100%;
 }
 
@@ -42,6 +39,8 @@ html {
 }
 
 .online {
+  position: fixed;
+  z-index: 1;
   color: white;
   margin: 10px;
   padding: 10px;
@@ -59,33 +58,38 @@ html {
 }
 
 .ChatInput {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+
   opacity: 1;
   width: 100%;
-  height: 100px;
-  background-color: red;
+  height: 50px;
+  /*   background-color: red;
+ */
   z-index: 1;
   position: fixed;
   bottom: 0px;
 }
+.ChatInput input {
+  width: 100%;
+  font-size: 25px;
+  padding-left: 10px;
+  margin: 5px;
+}
+.ChatInput button {
+  font-size: 20px;
+  margin: 0px;
+  margin: 10px;
+}
+
 .Chat {
   position: fixed;
   height: 100%;
   width: 100%;
-  bottom: 100px;
+  bottom: 50px;
   color: white;
-  background-color: rgb(229, 255, 0);
-}
-
-.Chat input {
-  font-size: 20px;
-  margin: 0px;
-  padding: 10px;
-}
-.Chat button {
-  font-size: 20px;
-  margin: 0px;
-  margin: 10px;
-  padding: 10px;
+  background-color: rgb(17, 17, 17);
 }
 
 .Chat ul {
@@ -93,16 +97,32 @@ html {
   margin: 0;
 }
 .Chat ul li {
-  padding: 10px;
+  display: flex;
   margin: 0;
+  padding: 0;
   list-style: none;
 }
 
-.Chat ul li:nth-child(even) {
-  background-color: rgb(68, 68, 68);
+
+
+.userNameRight {
+  width: 100%;
+  color: rgb(22, 22, 22);
+}
+.userRight {
+  float: right;
+  border-radius: 20px;
+  padding: 20px;
+  margin: 5px;
+  background-color: rgb(240, 240, 240);
 }
 
-.userName {
-  color: rgb(180, 180, 180);
-  font-weight: bold;
+.userNameLeft {
+  color: rgb(255, 255, 255);
+}
+.userLeft {
+  border-radius: 20px;
+  padding: 20px;
+  margin: 5px;
+  background-color: rgb(41, 41, 41);
 }
