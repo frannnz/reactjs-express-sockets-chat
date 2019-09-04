@@ -2,11 +2,15 @@ import React, { Component } from 'react'
 import io from 'socket.io-client';
 import Demo from './components/geo'
 
+import ScrollToBottom from 'react-scroll-to-bottom';
+
 
 let ownId = "User++" + Math.random();
 
 
-let LocalHost = "online";
+let LocalHost = "online"; // "online" or "offline"
+// use "offline" for local work
+// use "online" to deploy 
 let setHost = "";
 if (LocalHost === "offline") {
     setHost = "http://localhost:8080";
@@ -16,8 +20,6 @@ export default class App extends Component {
 
     state = {
         endpoint: setHost,
-        /*  endpoint: "", */
-
         usernameInput: "",
         username: "",
         onlineObj: [],
@@ -31,7 +33,6 @@ export default class App extends Component {
         socket.on("connect", data => {
             socket.emit("storeClientInfo", {
             });
-
         });
         socket.on("server message", data => {
             this.setState({ onlineObj: data });
@@ -119,29 +120,41 @@ export default class App extends Component {
     loadChat = () => {
         if (this.state.username !== "") {
             return (
-                <div className="Chat">
-                    <form onSubmit={this.handleChatSubmit}>
-                        <input
-                            type="text"
-                            placeholder=""
-                            onChange={this.handleChatChange}
-                            value={this.state.textChat}
-                            autoFocus
-                        />
-                        <button type="submit">
-                            chat</button>
-                    </form>
-                    <ul>
-                        {this.state.chatMessages.slice(-10).reverse().map((item, index) => (
-                            <li key={index}>
-                                <img alt="neu" src='https://www.123gif.de/gifs/smileys/smileys-0027.gif'></img><span className="userName">{item.user}:</span> {item.text}
-                            </li>
-                        ))}
-                    </ul>
+                <div>
+                    <div className="Chat">
+                        <ScrollToBottom scrollToBottom className="scrolling">
+                            <ul>
+                                {this.state.chatMessages.slice(-50).map((item, index) => (
+                                    <li key={index}>
+                                        <img alt="neu" src='https://www.123gif.de/gifs/smileys/smileys-0027.gif'></img><span className="userName">{item.user}:</span> {item.text}
+                                    </li>
+                                ))}
+                            </ul>
+                        </ScrollToBottom>
+                    </div>
+
+
+                    <div className="ChatInput">
+                        <form onSubmit={this.handleChatSubmit}>
+                            <input
+                                type="text"
+                                placeholder=""
+                                onChange={this.handleChatChange}
+                                value={this.state.textChat}
+                                autoFocus
+                            />
+                            <button type="submit">
+                                chat</button>
+                        </form>
+                    </div>
+
+
                 </div>
             );
         }
     }
+
+
 
     render() {
         return (
@@ -164,7 +177,9 @@ export default class App extends Component {
                 <div>
                     {this.loadChat()}
                 </div>
-                <Demo />
+
+
+                {/* <Demo /> */}
             </div>
         )
     }

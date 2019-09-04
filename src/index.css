@@ -1,4 +1,5 @@
-body {
+body,
+html {
   background-color: rgb(20, 20, 20);
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -8,11 +9,15 @@ body {
   -moz-osx-font-smoothing: grayscale;
 
   color: white;
+  overflow: hidden;
+  /*   height: 100%;
+  width: 100%; */
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+.scrolling {
+  /*   position: fixed;
+ */
+  height: 100%;
 }
 
 .login {
@@ -53,13 +58,23 @@ code {
   list-style: none;
 }
 
-.Chat {
-  color: white;
-  margin: 10px;
-  padding: 10px;
-  background-color: rgb(56, 56, 56);
+.ChatInput {
+  opacity: 1;
+  width: 100%;
+  height: 100px;
+  background-color: red;
+  z-index: 1;
+  position: fixed;
+  bottom: 0px;
 }
-
+.Chat {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  bottom: 100px;
+  color: white;
+  background-color: rgb(229, 255, 0);
+}
 
 .Chat input {
   font-size: 20px;
@@ -72,8 +87,6 @@ code {
   margin: 10px;
   padding: 10px;
 }
-
-
 
 .Chat ul {
   padding: 0;
@@ -90,6 +103,6 @@ code {
 }
 
 .userName {
-color: rgb(180, 180, 180);
+  color: rgb(180, 180, 180);
   font-weight: bold;
 }
