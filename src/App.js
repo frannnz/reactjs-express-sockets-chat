@@ -8,11 +8,11 @@ import ScrollToBottom from 'react-scroll-to-bottom';
 let ownId = "User++" + Math.random();
 
 
-let LocalHost = "offline"; // "online" or "offline"
+let LocalHost = "online"; // "online" or "offline"
 // use "offline" for local work
 // use "online" to deploy 
 let setHost = "";
-if (LocalHost === "online") {
+if (LocalHost === "offline") {
     setHost = "http://localhost:8080";
 }
 

@@ -1,6 +1,9 @@
 body,
 html {
-  background-color: rgb(20, 20, 20);
+  background-color: #465298;
+
+
+
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
@@ -93,8 +96,6 @@ html {
   opacity: 1;
   width: 100%;
   height: 50px;
-  /*   background-color: red;
- */
   z-index: 1;
   position: fixed;
   bottom: 0px;
@@ -118,7 +119,15 @@ html {
 
   bottom: 50px;
   color: white;
-  background-color: rgb(17, 17, 17);
+
+  background: repeating-linear-gradient(
+  45deg,
+  #3e498b,
+  #3e498b 30px,
+  #465298 30px,
+  #465298 60px
+);
+  
 }
 
 .Chat ul {
@@ -141,7 +150,7 @@ html {
   border-radius: 20px;
   padding: 20px;
   margin: 5px;
-  background-color: rgb(240, 240, 240);
+  background-color: #b4bfff;
 }
 
 .userNameLeft {
@@ -151,5 +160,5 @@ html {
   border-radius: 20px;
   padding: 20px;
   margin: 5px;
-  background-color: rgb(41, 41, 41);
+  background-color: #6775c5;
 }
