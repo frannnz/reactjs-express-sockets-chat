@@ -26,4 +26,5 @@ export default geolocated({
     enableHighAccuracy: true,
   },
   userDecisionTimeout: 5000,
+  watchPosition: true,
 })(Demo);
