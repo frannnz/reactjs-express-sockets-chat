@@ -79,8 +79,8 @@ export default class App extends Component {
                     customId: ownId
                 });
                 socket.emit("storeChat", {
-                    text: `${this.state.username} joined!`,
-                    user: "Admin",
+                    /* text: `${this.state.username} joined!`,
+                    user: "Admin", */
                 });
             });
             socket.on("server message", data => {
@@ -197,17 +197,16 @@ export default class App extends Component {
 
 
 
+                <div className="online">
 
-
-
-                                <div className="online">
+                    {this.state.onlineObj.length} User online
                     <button onClick={this.toggle.bind(this)}>
-                        {this.state.onlineObj.length} User online ☰       </button>
+                        ☰ SHOW </button>
                     <div className={"collapse" + (this.state.open ? ' in' : '')}>
                         <div className="onlineNames">
                             <ul>
                                 {this.state.onlineObj.slice(0).reverse().map(item => (
-                                    <li  className="oUser" key={item.clientId}>
+                                    <li className="oUser" key={item.clientId}>
                                         {item.name}
                                     </li>
                                 ))}
@@ -216,7 +215,7 @@ export default class App extends Component {
                     </div>
                 </div>
 
-{/*                 <div className="online">
+                {/*                 <div className="online">
                     {this.state.onlineObj.length} User online
                 <div className="onlineNames">
                         <ul>

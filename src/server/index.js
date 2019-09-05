@@ -29,11 +29,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.get('/', (req, res, next) =>
   res.sendFile(__dirname + './index.html'));
 
-io.on('connection', socket => {
-  socket.emit('hello', { message: 'hello from server' })
-}
-);
-
 
 var clients = [];
 var messAges = [];
@@ -58,17 +53,18 @@ io.sockets.on('connection', function (socket) {
 
   var cMessages = new Object();
   socket.on('storeChat', function (data) {
-/*     console.log(`Text: ${data.text}`);
- */        cMessages.text = data.text
-    cMessages.user = data.user
-    messAges.push(cMessages);
-/*         console.log(messAges);
- */    io.emit('chatMessage', messAges);
+    if (data.text !== "" &&
+      data.text !== " " &&
+      data.text !== undefined) {
+      console.log(`Text1: ${data.text}`);
+      console.log(`Text2: ${data.user}`);
+      cMessages.text = data.text
+      cMessages.user = data.user
+      messAges.push(cMessages);
+    }
+    io.emit('chatMessage', messAges);
   }
   );
-
-
-
 
   socket.on('disconnect', function (data) {
     for (var i = 0, len = clients.length; i < len; ++i) {
