@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import io from 'socket.io-client';
-import Demo from './components/geo'
 
 import ScrollToBottom from 'react-scroll-to-bottom';
 
